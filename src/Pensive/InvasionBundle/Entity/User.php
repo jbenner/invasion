@@ -57,7 +57,7 @@ class User
     /**
      * @var array
      *
-     * @ORM\Column(name="nodes", type="json_array")
+     * @ORM\Column(name="nodes", type="integer")
      */
     private $nodes;
 

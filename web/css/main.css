@@ -38,7 +38,7 @@ header {
     width: 80px;
     height: 80px;
     margin: 8px;
-    float: right;
+    float: left;
     border: 1px solid black;
     z-index: 6000; }
   #board .node {
@@ -54,35 +54,41 @@ header {
   #board #network1 {
     position: absolute;
     width: 200px;
-    height: 300px;
-    top: 10%;
-    left: 5%; }
+    height: 300px; }
     #board #network1 .server {
       background: green; }
   #board #network2 {
     position: absolute;
     width: 300px;
-    height: 200px;
-    top: 60%;
-    left: 2%; }
+    height: 200px; }
     #board #network2 .server {
       background: red; }
   #board #network3 {
     position: absolute;
     width: 200px;
-    height: 300px;
-    right: 9%;
-    top: 50%; }
+    height: 300px; }
     #board #network3 .server {
       background: purple; }
   #board #network4 {
     position: absolute;
     width: 300px;
-    height: 200px;
-    top: 15%;
-    right: 5%; }
+    height: 200px; }
     #board #network4 .server {
       background: blue; }
+  #board .north {
+    top: 10%;
+    left: 5%; }
+  #board .south {
+    right: 9%;
+    top: 50%; }
+  #board .east {
+    top: 15%;
+    right: 5%; }
+  #board .west {
+    top: 60%;
+    left: 2%; }
+  #board .disabled {
+    opacity: .4; }
 
 footer {
   position: fixed;

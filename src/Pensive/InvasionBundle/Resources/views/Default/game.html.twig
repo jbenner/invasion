@@ -13,10 +13,11 @@
         <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
-        <script src="{{ asset('js/modernizr-2.6.2.min.js') }}"></script>
-        <script src="{{ asset('js/jquery-1.9.1.min.js') }}"></script>
-        <script src="{{ asset('js/plugins.js') }}"></script>
-        <script src="{{ asset('js/main.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/modernizr-2.6.2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery-1.9.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.illuminate.0.7.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/plugins.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
     </head>
     <body>
         <!--[if lt IE 8]>
@@ -40,20 +41,55 @@
 {# Here are runtime events for the game #}
     <script type="text/javascript">
         $(document).ready(function() {
-            {# If the game has not been setup, fill the board with networks and servers #}
+            var players = {{ game.getPlayers|json_encode() }};
 
-            if ($('#board').children().length == 0) {
+            var playerTurn = function(playerId) {
+                $('.server').each(function() {
+                    if ($(this).hasClass('start')) {
+                        $(this).illuminate({
+                            'intensity': '1',
+                            'color': '#98cb00',
+                            'blink': 'true',
+                            'blinkSpeed': '500',
+                            'outerGlow': 'true',
+                            'outerGlowSize': '30px',
+                            'outerGlowColor': '#98cb00'
+                        });
+                    } else {
+                        $(this).addClass('disabled');
+                    }
+            $('.server').click(function() {
+                $(this).addClass('disabled');
+            });
+                });
+            };
+
+            // Give players 12 nodes and commence placement
+            var boardPlacement = function() {
+                for (i = 0; i < players.length; i++) {
+                    playerTurn(i);
+                }
+            };
+
+            // If the game has not been setup, fill the board with networks and servers
+            var boardSetup = function() {
                 $.post('/game/_setup', {{ game.getId }}, function(response) {
-                    var networks = $.parseJSON(response);
+                    networks = $.parseJSON(response);
 
                     for (i = 0; i < networks.length; i++) {
                         $('#board').append('<div id="network'+networks[i].id+'" class="network '+networks[i].location+'"></div>');
                         for (ii = 0; ii < networks[i].size; ii++) {
-                            $('#network'+networks[i].id).append('<div id="server-'+networks[i].id+ii+'" class="server"></div>');
+                            $('#network'+networks[i].id).append('<div id="server-'+networks[i].id+ii+'" class="server start"></div>');
                         }
                     }
                 });
-                return false;
+                setTimeout(function() {
+                    boardPlacement();
+                }, 600);
+            };
+
+            if ($('#board').children().length == 0) {
+                boardSetup();
             }
         });
     </script>
