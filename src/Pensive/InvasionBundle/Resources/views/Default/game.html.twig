@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Pensive Invasion | Network Domination</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
+        <script src="{{ asset('js/modernizr-2.6.2.min.js') }}"></script>
+        <script src="{{ asset('js/jquery-1.9.1.min.js') }}"></script>
+        <script src="{{ asset('js/plugins.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <header>
+            <span class="game-title">Pensive Invasion</span> •
+            <span class="game-id">Game ID: {{ game.getId }}</span> •
+            <span class="player1-name">Player 1: {{ game.getPlayers[0].getName }}</span> •
+            <span class="player2-name">Player 2: {{ game.getPlayers[1].getName }}</span>
+        </header>
+
+        <div id="board"></div>
+
+        <footer>
+            Don't Lose!
+        </footer>
+    </body>
+
+{# Here are runtime events for the game #}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            {# If the game has not been setup, fill the board with networks and servers #}
+
+            if ($('#board').children().length == 0) {
+                $.post('/game/_setup', {{ game.getId }}, function(response) {
+                    var networks = $.parseJSON(response);
+
+                    for (i = 0; i < networks.length; i++) {
+                        $('#board').append('<div id="network'+networks[i].id+'" class="network '+networks[i].location+'"></div>');
+                        for (ii = 0; ii < networks[i].size; ii++) {
+                            $('#network'+networks[i].id).append('<div id="server-'+networks[i].id+ii+'" class="server"></div>');
+                        }
+                    }
+                });
+                return false;
+            }
+        });
+    </script>
+</html>

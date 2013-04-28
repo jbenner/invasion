@@ -1,0 +1,3 @@
+pensive_invasion:
+    resource: "@PensiveInvasionBundle/Resources/config/routing.yml"
+    prefix:   /

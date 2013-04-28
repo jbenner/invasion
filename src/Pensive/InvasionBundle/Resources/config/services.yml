@@ -1,0 +1,7 @@
+parameters:
+#    pensive_invasion.example.class: Pensive\InvasionBundle\Example
+
+services:
+#    pensive_invasion.example:
+#        class: %pensive_invasion.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

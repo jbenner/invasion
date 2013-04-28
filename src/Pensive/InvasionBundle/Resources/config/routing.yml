@@ -1,0 +1,11 @@
+pensive_invasion_homepage:
+    pattern:  /
+    defaults: { _controller: PensiveInvasionBundle:Default:index }
+
+pensive_invasion_setup:
+    pattern: /game/_setup
+    defaults: { _controller: PensiveInvasionBundle:Default:setup }
+
+pensive_invasion_game:
+    pattern: /game/{gameId}
+    defaults: { _controller: PensiveInvasionBundle:Default:game }
