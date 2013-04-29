@@ -50,11 +50,11 @@ header {
 
     .server {
         position: relative;
-        width: 80px;
-        height: 80px;
+        display: none;
+        width: 70px;
+        height: 70px;
         margin: 8px;
         float: left;
-        border: 1px solid black;
         z-index: 6000;
     }
 
@@ -130,7 +130,20 @@ header {
         left: 2%;
     }
 
+    .player1 {
+        border: 5px solid $player1;
+    }
+
+    .player2 {
+        border: 5px solid $player2;
+    }
+
+    .enabled {
+        border: 5px solid #98CB00;
+    }
+
     .disabled {
+        border: 5px solid #333333;
         opacity: .4;
     }
 }

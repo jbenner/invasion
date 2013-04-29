@@ -41,40 +41,41 @@
 {# Here are runtime events for the game #}
     <script type="text/javascript">
         $(document).ready(function() {
-            var players = {{ game.getPlayers|json_encode() }};
 
+            // Get current turn information: playerID, networks, servers, nodes, turncount, and bonus information
             var playerTurn = function(playerId) {
-                $('.server').each(function() {
-                    if ($(this).hasClass('start')) {
-                        $(this).illuminate({
-                            'intensity': '1',
-                            'color': '#98cb00',
-                            'blink': 'true',
-                            'blinkSpeed': '500',
-                            'outerGlow': 'true',
-                            'outerGlowSize': '30px',
-                            'outerGlowColor': '#98cb00'
-                        });
-                    } else {
-                        $(this).addClass('disabled');
-                    }
-            $('.server').click(function() {
-                $(this).addClass('disabled');
-            });
+                $.post('/game/_turn', { 'gameId': '{{ game.getId }}' }, function(response) {
+                    var turnData = $.parseJSON(response);
+                    console.log(turnData);
+                });
+
+                $('.player'+playerId).each(function() {
+                    $(this).fadeOut(100);
                 });
             };
 
-            // Give players 12 nodes and commence placement
+            // Give players beginning nodes and commence placement
             var boardPlacement = function() {
-                for (i = 0; i < players.length; i++) {
-                    playerTurn(i);
-                }
+                $('.server').each(function() {
+                    $(this).fadeIn(250);
+                    if ($(this).hasClass('start')) {
+                        $(this).addClass('enabled');
+                    } else {
+                        $(this).addClass('disabled');
+                    }
+                    $(this).click(function() {
+                        $(this).removeClass('start');
+                        $(this).removeClass('enabled');
+                        $(this).addClass('disabled');
+                    });
+                });
+                playerTurn(1);
             };
 
             // If the game has not been setup, fill the board with networks and servers
             var boardSetup = function() {
-                $.post('/game/_setup', {{ game.getId }}, function(response) {
-                    networks = $.parseJSON(response);
+                $.post('/game/_setup', { 'gameId': '{{ game.getId }}' }, function(response) {
+                    var networks = $.parseJSON(response);
 
                     for (i = 0; i < networks.length; i++) {
                         $('#board').append('<div id="network'+networks[i].id+'" class="network '+networks[i].location+'"></div>');
@@ -85,7 +86,7 @@
                 });
                 setTimeout(function() {
                     boardPlacement();
-                }, 600);
+                }, 500);
             };
 
             if ($('#board').children().length == 0) {

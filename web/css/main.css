@@ -35,11 +35,11 @@ header {
   z-index: 5000; }
   #board .server {
     position: relative;
-    width: 80px;
-    height: 80px;
+    display: none;
+    width: 70px;
+    height: 70px;
     margin: 8px;
     float: left;
-    border: 1px solid black;
     z-index: 6000; }
   #board .node {
     position: relative;
@@ -87,7 +87,14 @@ header {
   #board .west {
     top: 60%;
     left: 2%; }
+  #board .player1 {
+    border: 5px solid #3d9ad1; }
+  #board .player2 {
+    border: 5px solid #ff9c00; }
+  #board .enabled {
+    border: 5px solid #98CB00; }
   #board .disabled {
+    border: 5px solid #333333;
     opacity: .4; }
 
 footer {

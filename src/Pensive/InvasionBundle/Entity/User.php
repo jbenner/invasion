@@ -57,7 +57,7 @@ class User
     /**
      * @var array
      *
-     * @ORM\Column(name="nodes", type="integer")
+     * @ORM\Column(name="nodes", type="json_array")
      */
     private $nodes;
 
@@ -319,5 +319,74 @@ class User
     public function getRecords()
     {
         return $this->records;
+    }
+
+    /**
+     * Set records
+     *
+     * @param array $networks
+     * @return User
+     */
+    public function setNetworks($networks)
+    {
+        $this->networks = $networks;
+
+        return $this;
+    }
+
+    /**
+     * Get networks
+     *
+     * @return array
+     */
+    public function getNetworks()
+    {
+        return $this->networks;
+    }
+
+    /**
+     * Set servers
+     *
+     * @param array $servers
+     * @return User
+     */
+    public function setServers($servers)
+    {
+        $this->servers = $servers;
+
+        return $this;
+    }
+
+    /**
+     * Get servers
+     *
+     * @return array
+     */
+    public function getServers()
+    {
+        return $this->servers;
+    }
+
+    /**
+     * Set nodes
+     *
+     * @param array $nodes
+     * @return User
+     */
+    public function setNodes($nodes)
+    {
+        $this->nodes = $nodes;
+
+        return $this;
+    }
+
+    /**
+     * Get nodes
+     *
+     * @return array
+     */
+    public function getNodes()
+    {
+        return $this->nodes;
     }
 }
